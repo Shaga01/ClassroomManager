@@ -1,23 +1,26 @@
 package com.shashwat.classmanager.model;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// "extends Person" means Student INHERITS name, email, and their getters/setters
-// from Person automatically. We don't rewrite them here.
+@Entity // Student gets its OWN table, joined back to Person's table via shared id
 public class Student extends Person {
 
-    private String studentId; // something specific to students only, e.g. roll number
+    private String studentId;
 
-
+    // We're skipping the real @ManyToMany relationship to ClassRoom for now —
+    // we'll add that properly once ClassRoom exists as an entity.
+    // For now, JPA needs a way to store a List<String> in a table, so we use
+    // @ElementCollection — tells JPA "this isn't a relationship to another
+    // entity, it's just a simple list of values, store it in its own small table."
+    @ElementCollection
     private List<String> enrolledClassNames = new ArrayList<>();
 
-    // Constructor — notice "super(name, email)" below.
-    // This calls Person's constructor first, to set up the inherited fields,
-    // BEFORE doing anything Student-specific. Every subclass constructor
-    // must call super(...) as its first line (Java does this automatically
-    // if you don't, calling the no-arg super() — but Person has no no-arg
-    // constructor, so we MUST call super(name, email) explicitly here).
+    // No-arg constructor required by JPA, same reason as Person
+    protected Student() {
+    }
+
     public Student(String name, String email, String studentId) {
         super(name, email);
         this.studentId = studentId;

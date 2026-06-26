@@ -1,17 +1,22 @@
 package com.shashwat.classmanager.model;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Faculty extends Person {
 
-    private String department; // specific to Faculty only
+    private String department;
 
-    // A faculty can own/teach multiple classes
+    @ElementCollection
     private List<String> classNamesTaught = new ArrayList<>();
 
+    protected Faculty() {
+    }
+
     public Faculty(String name, String email, String department) {
-        super(name, email); // same pattern as Student — must call Person's constructor first
+        super(name, email);
         this.department = department;
     }
 
