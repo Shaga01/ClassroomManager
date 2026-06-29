@@ -1,0 +1,19 @@
+Flow:
+HTTP request → Controller (@RestController) → Service (@Service) → Repository (JpaRepository) → Database
+
+Postman (HTTP request)
+  → Controller (@RestController) — receives request, calls service
+  → Service (@Service) — business logic, calls repository
+  → Repository (JpaRepository interface) — Spring auto-generates SQL
+  → Hibernate — translates to actual SQL
+  → H2 Database — stores/retrieves rows
+
+
+Controller->Maps which http request goes to which service
+Service-> does findAll, save kinds of operations
+Repository-> interface(not class) which extends JpaRepository<the entity this repository manages, type of entity's @Id field>
+
+Model: outline of Database, has entities @Entity, has getter and setters and constructor as fields are defined here.
+@Entity: Marks a class as a DB table
+
+super(): Calls parent constructor from subclass
