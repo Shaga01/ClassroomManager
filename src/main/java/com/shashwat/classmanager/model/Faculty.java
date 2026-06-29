@@ -12,6 +12,13 @@ public class Faculty extends Person {
     @ElementCollection
     private List<String> classNamesTaught = new ArrayList<>();
 
+    // ONE Faculty can have MANY ClassRooms.
+    // "mappedBy = faculty" means: "don't create a new foreign key column here.
+    // The relationship is already defined on the OTHER side (ClassRoom.faculty
+    // field) — just look there to figure out which classrooms belong to me."
+    @OneToMany(mappedBy = "faculty")
+    private List<ClassRoom> classRooms = new ArrayList<>();
+
     protected Faculty() {
     }
 
@@ -30,5 +37,9 @@ public class Faculty extends Person {
 
     public List<String> getClassNamesTaught() {
         return classNamesTaught;
+    }
+
+    public List<ClassRoom> getClassRooms() {
+        return classRooms;
     }
 }

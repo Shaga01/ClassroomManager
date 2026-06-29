@@ -17,6 +17,13 @@ public class Student extends Person {
     @ElementCollection
     private List<String> enrolledClassNames = new ArrayList<>();
 
+    // The OTHER side of the @ManyToMany relationship defined in ClassRoom.
+    // mappedBy = "students" matches the field name in ClassRoom.
+    // We do NOT repeat @JoinTable here — that's only defined once,
+    // on whichever side "owns" the relationship (we chose ClassRoom).
+    @ManyToMany(mappedBy = "students")
+    private List<ClassRoom> classRooms = new ArrayList<>();
+
     // No-arg constructor required by JPA, same reason as Person
     protected Student() {
     }

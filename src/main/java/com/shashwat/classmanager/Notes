@@ -17,3 +17,5 @@ Model: outline of Database, has entities @Entity, has getter and setters and con
 @Entity: Marks a class as a DB table
 
 super(): Calls parent constructor from subclass
+
+the foreign key always lives on the "many" side
