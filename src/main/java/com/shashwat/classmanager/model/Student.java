@@ -1,5 +1,6 @@
 package com.shashwat.classmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class Student extends Person {
     // We do NOT repeat @JoinTable here — that's only defined once,
     // on whichever side "owns" the relationship (we chose ClassRoom).
     @ManyToMany(mappedBy = "students")
+    @JsonIgnore
     private List<ClassRoom> classRooms = new ArrayList<>();
 
     // No-arg constructor required by JPA, same reason as Person

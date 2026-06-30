@@ -19,3 +19,53 @@ Model: outline of Database, has entities @Entity, has getter and setters and con
 super(): Calls parent constructor from subclass
 
 the foreign key always lives on the "many" side
+
+In ClassRoomService::
+Optional<Faculty> and .orElseThrow(...).  // We don't explicitly use Optional<>; its abstraction
+findById() doesn't return a Faculty directly — it returns an Optional<Faculty>, because the ID you searched for might not exist in the database.
+
+ @PathVariables — values embedded directly in the URL path itself.
+ Difference Between::
+ @RequestBody - pulls entire Json; like Faculty faculty :: pulls all fields
+ @RequestParam — pulls values from the query string (?className=Math101&facultyId=2). Good for optional or simple flat parameters.
+ @PathVariable — pulls values embedded directly in the URL path (/classrooms/1/enroll/3). Good for identifying a specific resource
+ (REST convention: the URL itself represents "what" you're acting on).
+
+
+
+ bidirectional JSON serialization loop:: When ManytoMany Classroom->Faculty->Classroom... so on infinite when they call each other while posting and adding fields
+ Solve easy fix can be @JsonIgnore in any one so that Jackson only follows one relationship
+
+
+Also check Desktop file for microservices
+
+
+
+COMPLETE PROJECT OVERVIEW::
+
+classmanager/
+├── model/
+│   ├── Person.java          (abstract, @Entity, @Inheritance JOINED)
+│   ├── Student.java         (extends Person, @ManyToMany ClassRoom)
+│   ├── Faculty.java         (extends Person, @OneToMany ClassRoom)
+│   ├── ClassRoom.java       (@ManyToOne Faculty, @ManyToMany Students)
+│   ├── Assignment.java      (@ManyToOne ClassRoom)
+│   └── Submission.java      (@ManyToOne Assignment + Student, isLate())
+├── repository/
+│   ├── StudentRepository
+│   ├── FacultyRepository
+│   ├── ClassRoomRepository
+│   ├── AssignmentRepository (findByClassRoomId — derived query)
+│   └── SubmissionRepository (findByAssignmentId — derived query)
+├── service/
+│   ├── StudentService
+│   ├── FacultyService
+│   ├── ClassRoomService
+│   ├── AssignmentService
+│   └── SubmissionService    (getStudentsWhoSubmitted, getStudentsWhoDidNotSubmit — Streams)
+└── controller/
+    ├── StudentController
+    ├── FacultyController
+    ├── ClassRoomController
+    ├── AssignmentController
+    └── SubmissionController

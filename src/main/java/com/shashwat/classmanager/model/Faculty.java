@@ -1,5 +1,6 @@
 package com.shashwat.classmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ public class Faculty extends Person {
     // The relationship is already defined on the OTHER side (ClassRoom.faculty
     // field) — just look there to figure out which classrooms belong to me."
     @OneToMany(mappedBy = "faculty")
+    @JsonIgnore // Don't include this field when converting Faculty to JSON.
+    // This breaks the infinite loop: Faculty -> ClassRoom -> Faculty -> ...
     private List<ClassRoom> classRooms = new ArrayList<>();
 
     protected Faculty() {
