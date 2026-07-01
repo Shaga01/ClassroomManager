@@ -39,7 +39,20 @@ findById() doesn't return a Faculty directly — it returns an Optional<Faculty>
 
 Also check Desktop file for microservices
 
+What is unit testing?
+A unit test tests one class in isolation — specifically its logic —
+without involving the database, the web server, Spring, or any other real dependencies.
+The key word is isolation. Our StudentService depends on StudentRepository
+In a unit test we don't want to actually hit the database —
+we want to test only the logic inside StudentService itself.
 
+Two tools we have used
+JUnit 5 — the testing framework. Gives us @Test, assertEquals, assertNotNull etc.
+
+General Unit Test Pattern: AAA pattern
+// 1. ARRANGE — set up your data and tell mocks what to return
+// 2. ACT — call the actual method you're testing
+// 3. ASSERT — verify the result is what you expected
 
 COMPLETE PROJECT OVERVIEW::
 
