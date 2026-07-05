@@ -82,3 +82,12 @@ classmanager/
     ├── ClassRoomController
     ├── AssignmentController
     └── SubmissionController
+
+
+
+    @Configuration   → marks a class as a manual bean factory
+    @Bean            → marks a method whose return value becomes a Spring bean
+    @Component       → marks YOUR class for auto-detection by component scan
+    @Service         → @Component + semantic meaning (business logic layer)
+    @Repository      → @Component + semantic meaning (data layer) + exception translation
+    @RestController  → @Component + @ResponseBody (web layer)
